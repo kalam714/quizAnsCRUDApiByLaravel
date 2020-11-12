@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quetion;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Http\Resources\QuestionResource;
 
-class QuetionController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class QuetionController extends Controller
      */
     public function index()
     {
-        //
+       $questions=QuestionResource::collection(Question::all());
+       return response()->json($questions);
     }
 
     /**
@@ -22,10 +24,7 @@ class QuetionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,51 +34,51 @@ class QuetionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Question::create($request->all());
+        return response('data inserted');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Quetion  $quetion
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Quetion $quetion)
+    public function show(Question $question)
     {
-        //
+        return new QuestionResource($question);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Quetion  $quetion
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quetion $quetion)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Quetion  $quetion
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Quetion $quetion)
+    public function update(Request $request, Question $question)
     {
-        //
+        $question->update($request->all());
+        return response('Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Quetion  $quetion
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quetion $quetion)
+    public function destroy(Question $question)
     {
-        //
+       $question->delete();
+       return response('deleted');
     }
 }
