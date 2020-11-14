@@ -9,11 +9,12 @@ use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('JWT', ['except' => ['index','show']]);
+    }
+
+    
     public function index()
     {
        $categories=CategoryResource::collection(Category::all());

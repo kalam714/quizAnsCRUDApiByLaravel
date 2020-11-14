@@ -8,11 +8,12 @@ use App\Http\Resources\QuestionResource;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('JWT', ['except' => ['index','show']]);
+    }
+
+    
     public function index()
     {
        $questions=QuestionResource::collection(Question::all());
